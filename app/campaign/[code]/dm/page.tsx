@@ -642,6 +642,14 @@ export default function CampaignDMPage() {
     }, 2000)
   }
 
+  async function copyDisplayLink() {
+    const displayLink = `${window.location.origin}/campaign/${campaignCode}/display`
+
+    await navigator.clipboard.writeText(displayLink)
+
+    alert("Display link copied!")
+  }
+
   async function logout() {
     await supabase.auth.signOut()
     router.push("/login")
@@ -855,6 +863,20 @@ export default function CampaignDMPage() {
                 className="w-full bg-yellow-600 hover:bg-yellow-500 text-black rounded-xl p-3 font-bold mb-3"
               >
                 {copiedInvite ? "Copied!" : "Copy Invite Link"}
+              </button>
+
+              <button
+                onClick={() => router.push(`/campaign/${campaignCode}/display`)}
+                className="w-full bg-blue-700 hover:bg-blue-600 text-white rounded-xl p-3 font-bold mb-3"
+              >
+                Display Screen
+              </button>
+
+              <button
+                onClick={copyDisplayLink}
+                className="w-full bg-green-700 hover:bg-green-600 text-white rounded-xl p-3 font-bold mb-3"
+              >
+                Copy Display Link
               </button>
 
               <button
