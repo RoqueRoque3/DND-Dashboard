@@ -181,13 +181,24 @@ export default function HomePage() {
                     key={membership.id}
                     className="bg-zinc-950 border border-zinc-700 rounded-2xl p-5"
                   >
-                    <h3 className="text-2xl font-bold text-yellow-400">
-                      {membership.campaigns?.name}
-                    </h3>
+                    <div className="flex items-start justify-between gap-4">
+                      <div>
+                        <h3 className="text-2xl font-bold text-yellow-400">
+                          {membership.campaigns?.name}
+                        </h3>
 
-                    <p className="text-zinc-400 mt-1">
-                      Code: {membership.campaigns?.code}
-                    </p>
+                        <p className="text-zinc-400 mt-1">
+                          Code: {membership.campaigns?.code}
+                        </p>
+                      </div>
+
+                      <button
+                        onClick={() => deleteCampaign(membership)}
+                        className="bg-red-900 hover:bg-red-800 text-red-100 border border-red-600 rounded-lg px-3 py-2 text-sm font-bold whitespace-nowrap"
+                      >
+                        Delete
+                      </button>
+                    </div>
 
                     <button
                       onClick={() =>
@@ -198,13 +209,6 @@ export default function HomePage() {
                       className="mt-4 w-full bg-yellow-600 hover:bg-yellow-500 text-black rounded-xl p-3 font-black"
                     >
                       Open DM Dashboard
-                    </button>
-
-                    <button
-                      onClick={() => deleteCampaign(membership)}
-                      className="mt-3 w-full bg-red-900 hover:bg-red-800 text-red-100 border border-red-600 rounded-xl p-3 font-black"
-                    >
-                      Delete Campaign
                     </button>
                   </div>
                 ))}
@@ -235,13 +239,24 @@ export default function HomePage() {
                     key={membership.id}
                     className="bg-zinc-950 border border-zinc-700 rounded-2xl p-5"
                   >
-                    <h3 className="text-2xl font-bold text-blue-400">
-                      {membership.campaigns?.name}
-                    </h3>
+                    <div className="flex items-start justify-between gap-4">
+                      <div>
+                        <h3 className="text-2xl font-bold text-blue-400">
+                          {membership.campaigns?.name}
+                        </h3>
 
-                    <p className="text-zinc-400 mt-1">
-                      Code: {membership.campaigns?.code}
-                    </p>
+                        <p className="text-zinc-400 mt-1">
+                          Code: {membership.campaigns?.code}
+                        </p>
+                      </div>
+
+                      <button
+                        onClick={() => leaveCampaign(membership)}
+                        className="bg-red-900 hover:bg-red-800 text-red-100 border border-red-600 rounded-lg px-3 py-2 text-sm font-bold whitespace-nowrap"
+                      >
+                        Leave
+                      </button>
+                    </div>
 
                     <button
                       onClick={() =>
@@ -252,13 +267,6 @@ export default function HomePage() {
                       className="mt-4 w-full bg-blue-700 hover:bg-blue-600 text-white rounded-xl p-3 font-black"
                     >
                       Open Player Page
-                    </button>
-
-                    <button
-                      onClick={() => leaveCampaign(membership)}
-                      className="mt-3 w-full bg-red-900 hover:bg-red-800 text-red-100 border border-red-600 rounded-xl p-3 font-black"
-                    >
-                      Delete Character / Leave Campaign
                     </button>
                   </div>
                 ))}
