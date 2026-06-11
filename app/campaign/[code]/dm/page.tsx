@@ -53,10 +53,29 @@ export default function CampaignDMPage() {
       return false
     }
 
-    const { data: isDm, error } = await supabase.rpc("is_dm")
+    const { data: campaignData, error: campaignError } = await supabase
+      .from("campaigns")
+      .select("id, code")
+      .eq("code", campaignCode)
+      .single()
 
-    if (error || !isDm) {
-      router.push(`/campaign/${campaignCode}/player`)
+    if (campaignError || !campaignData) {
+      console.log("DM VERIFY CAMPAIGN ERROR:", campaignError?.message)
+      router.push("/home")
+      return false
+    }
+
+    const { data: membershipData, error: membershipError } = await supabase
+      .from("campaign_members")
+      .select("*")
+      .eq("campaign_id", campaignData.id)
+      .eq("user_id", user.id)
+      .eq("role", "dm")
+      .maybeSingle()
+
+    if (membershipError || !membershipData) {
+      console.log("DM VERIFY MEMBERSHIP ERROR:", membershipError?.message)
+      router.push("/home")
       return false
     }
 
