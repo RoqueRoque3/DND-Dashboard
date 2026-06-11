@@ -1,10 +1,10 @@
 "use client"
 
-import { useState } from "react"
+import { Suspense, useState } from "react"
 import { useRouter, useSearchParams } from "next/navigation"
 import { supabase } from "../../lib/supabase"
 
-export default function LoginPage() {
+function LoginContent() {
   const router = useRouter()
   const searchParams = useSearchParams()
 
@@ -54,9 +54,7 @@ export default function LoginPage() {
 
         <div className="space-y-5">
           <div>
-            <label className="block text-sm text-zinc-400 mb-2">
-              Email
-            </label>
+            <label className="block text-sm text-zinc-400 mb-2">Email</label>
 
             <input
               type="email"
@@ -99,5 +97,19 @@ export default function LoginPage() {
         </div>
       </div>
     </main>
+  )
+}
+
+export default function LoginPage() {
+  return (
+    <Suspense
+      fallback={
+        <main className="min-h-screen bg-zinc-950 text-white flex items-center justify-center">
+          Loading login...
+        </main>
+      }
+    >
+      <LoginContent />
+    </Suspense>
   )
 }
