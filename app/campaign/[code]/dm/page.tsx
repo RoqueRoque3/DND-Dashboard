@@ -835,7 +835,7 @@ export default function CampaignDMPage() {
           </button>
 
           {showAccountMenu && (
-            <div className="absolute right-0 top-12 w-[28rem] bg-zinc-900 border border-yellow-700 rounded-2xl shadow-2xl p-5 z-50">
+            <div className="fixed right-0 top-12 w-[28rem] bg-zinc-900 border border-yellow-700 rounded-2xl shadow-2xl p-5 z-50">
               <h3 className="text-xl font-bold text-yellow-400 mb-3">
                 Campaign Invite
               </h3>
