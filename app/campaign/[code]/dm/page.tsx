@@ -30,6 +30,8 @@ export default function CampaignDMPage() {
   const [showSavedMajorEnemies, setShowSavedMajorEnemies] = useState(false)
   const [showAddEnemy, setShowAddEnemy] = useState(false)
   const [showAddMajorEnemy, setShowAddMajorEnemy] = useState(false)
+  const [showAccountMenu, setShowAccountMenu] = useState(false)
+  const [copiedInvite, setCopiedInvite] = useState(false)
 
   const [newEnemyName, setNewEnemyName] = useState("Goblin")
   const [newEnemyHp, setNewEnemyHp] = useState(10)
@@ -628,6 +630,18 @@ export default function CampaignDMPage() {
     await loadAll()
   }
 
+  async function copyInviteLink() {
+    const inviteLink = `${window.location.origin}/campaign/${campaignCode}/invite`
+
+    await navigator.clipboard.writeText(inviteLink)
+
+    setCopiedInvite(true)
+
+    setTimeout(() => {
+      setCopiedInvite(false)
+    }, 2000)
+  }
+
   async function logout() {
     await supabase.auth.signOut()
     router.push("/login")
@@ -812,12 +826,46 @@ export default function CampaignDMPage() {
           </p>
         </div>
 
-        <button
-          onClick={logout}
-          className="bg-zinc-800 hover:bg-zinc-700 border border-zinc-600 rounded-xl px-4 py-2"
-        >
-          Logout
-        </button>
+        <div className="relative">
+          <button
+            onClick={() => setShowAccountMenu((prev) => !prev)}
+            className="bg-zinc-800 hover:bg-zinc-700 border border-zinc-600 rounded-xl px-4 py-2 font-bold"
+          >
+            Menu {showAccountMenu ? "▲" : "▼"}
+          </button>
+
+          {showAccountMenu && (
+            <div className="absolute right-0 top-12 w-[28rem] bg-zinc-900 border border-yellow-700 rounded-2xl shadow-2xl p-5 z-50">
+              <h3 className="text-xl font-bold text-yellow-400 mb-3">
+                Campaign Invite
+              </h3>
+
+              <p className="text-sm text-zinc-400 mb-3">
+                Send this link to players so they can join this campaign and create their character.
+              </p>
+
+              <div className="bg-zinc-950 border border-zinc-700 rounded-xl p-3 text-xs text-zinc-300 break-all mb-4">
+                {typeof window !== "undefined"
+                  ? `${window.location.origin}/campaign/${campaignCode}/invite`
+                  : `/campaign/${campaignCode}/invite`}
+              </div>
+
+              <button
+                onClick={copyInviteLink}
+                className="w-full bg-yellow-600 hover:bg-yellow-500 text-black rounded-xl p-3 font-bold mb-3"
+              >
+                {copiedInvite ? "Copied!" : "Copy Invite Link"}
+              </button>
+
+              <button
+                onClick={logout}
+                className="w-full bg-red-800 hover:bg-red-700 rounded-xl p-3 font-bold"
+              >
+                Logout
+              </button>
+            </div>
+          )}
+        </div>
       </div>
 
       <section className="mb-12">

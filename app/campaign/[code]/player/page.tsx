@@ -161,26 +161,9 @@ export default function CampaignPlayerPage() {
   }
 
   if (!character) {
-    return (
-      <main className="min-h-screen bg-zinc-950 text-white flex flex-col items-center justify-center p-8">
-        <h1 className="text-4xl font-bold text-red-400 mb-4">
-          No character is assigned to this login.
-        </h1>
-
-        <p className="text-zinc-400 text-center max-w-xl">
-          This account does not have a player character assigned for campaign{" "}
-          <span className="text-yellow-400 font-bold">{campaign.code}</span>.
-        </p>
-
-        <button
-          onClick={logout}
-          className="mt-8 bg-zinc-800 hover:bg-zinc-700 border border-zinc-600 rounded-xl px-5 py-3"
-        >
-          Logout
-        </button>
-      </main>
-    )
-  }
+  router.push(`/campaign/${campaignCode}/setup`)
+  return null
+}
 
   return (
     <main
