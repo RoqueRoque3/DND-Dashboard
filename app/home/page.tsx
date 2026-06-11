@@ -62,6 +62,66 @@ export default function HomePage() {
     router.push("/login")
   }
 
+  async function deleteCampaign(member: CampaignMember) {
+    if (!member.campaigns) return
+
+    const confirmDelete = confirm(
+      `Delete campaign "${member.campaigns.name}"?\n\nThis will remove the campaign and its related campaign data.`
+    )
+
+    if (!confirmDelete) return
+
+    const { error } = await supabase
+      .from("campaigns")
+      .delete()
+      .eq("id", member.campaign_id)
+
+    if (error) {
+      alert(error.message)
+      return
+    }
+
+    await loadHome()
+  }
+
+  async function leaveCampaign(member: CampaignMember) {
+    if (!member.campaigns) return
+
+    const confirmLeave = confirm(
+      `Remove your character from "${member.campaigns.name}"?`
+    )
+
+    if (!confirmLeave) return
+
+    const {
+      data: { user },
+    } = await supabase.auth.getUser()
+
+    if (!user) {
+      router.push("/login")
+      return
+    }
+
+    await supabase
+      .from("characters")
+      .delete()
+      .eq("campaign_id", member.campaign_id)
+      .eq("user_id", user.id)
+      .eq("creature_type", "player")
+
+    const { error } = await supabase
+      .from("campaign_members")
+      .delete()
+      .eq("id", member.id)
+
+    if (error) {
+      alert(error.message)
+      return
+    }
+
+    await loadHome()
+  }
+
   useEffect(() => {
     loadHome()
   }, [])
@@ -105,8 +165,6 @@ export default function HomePage() {
         </div>
 
         <div className="grid lg:grid-cols-2 gap-8">
-          {/* DM Campaigns */}
-
           <section className="bg-zinc-900 border border-yellow-700 rounded-3xl p-6">
             <h2 className="text-3xl font-black text-yellow-400 mb-6">
               DM Campaigns
@@ -141,6 +199,13 @@ export default function HomePage() {
                     >
                       Open DM Dashboard
                     </button>
+
+                    <button
+                      onClick={() => deleteCampaign(membership)}
+                      className="mt-3 w-full bg-red-900 hover:bg-red-800 text-red-100 border border-red-600 rounded-xl p-3 font-black"
+                    >
+                      Delete Campaign
+                    </button>
                   </div>
                 ))}
               </div>
@@ -153,8 +218,6 @@ export default function HomePage() {
               Create New Campaign
             </button>
           </section>
-
-          {/* Player Campaigns */}
 
           <section className="bg-zinc-900 border border-blue-700 rounded-3xl p-6">
             <h2 className="text-3xl font-black text-blue-400 mb-6">
@@ -189,6 +252,13 @@ export default function HomePage() {
                       className="mt-4 w-full bg-blue-700 hover:bg-blue-600 text-white rounded-xl p-3 font-black"
                     >
                       Open Player Page
+                    </button>
+
+                    <button
+                      onClick={() => leaveCampaign(membership)}
+                      className="mt-3 w-full bg-red-900 hover:bg-red-800 text-red-100 border border-red-600 rounded-xl p-3 font-black"
+                    >
+                      Delete Character / Leave Campaign
                     </button>
                   </div>
                 ))}
