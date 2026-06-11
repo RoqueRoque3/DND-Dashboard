@@ -22,18 +22,22 @@ export default function HomePage() {
     }
 
     const { data, error } = await supabase
-      .from("campaign_members")
-      .select(`
-        *,
-        campaigns (
-          id,
-          name,
-          code,
-          created_at
-        )
-      `)
-      .eq("user_id", user.id)
-      .order("created_at", { ascending: true })
+  .from("campaign_members")
+  .select(`
+    id,
+    campaign_id,
+    user_id,
+    role,
+    created_at,
+    campaigns!campaign_members_campaign_id_fkey (
+      id,
+      name,
+      code,
+      created_at
+    )
+  `)
+  .eq("user_id", user.id)
+  .order("created_at", { ascending: true })
 
     if (error) {
       console.log("HOME MEMBERSHIP ERROR:", error.message)

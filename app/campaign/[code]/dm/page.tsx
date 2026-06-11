@@ -819,7 +819,7 @@ export default function CampaignDMPage() {
 
         <div className="text-center">
           <h1 className="text-5xl font-bold text-yellow-500">
-            TESTING 123
+            Dungeon Master Dashboard
           </h1>
           <p className="text-zinc-400 mt-2">
             Campaign: {campaign.name} / Code: {campaign.code}
@@ -831,14 +831,11 @@ export default function CampaignDMPage() {
             onClick={() => setShowAccountMenu((prev) => !prev)}
             className="bg-zinc-800 hover:bg-zinc-700 border border-zinc-600 rounded-xl px-4 py-2 font-bold"
           >
-            Menu {showAccountMenu ? "▲" : "▼"}
+            ⚙ Menu {showAccountMenu ? "▲" : "▼"}
           </button>
 
           {showAccountMenu && (
-            <div
-              className="fixed right-8 top-24 w-[28rem] max-w-[calc(100vw-4rem)] bg-zinc-900 border border-yellow-700 rounded-2xl shadow-2xl p-5"
-              style={{ zIndex: 999999 }}
-            >
+            <div className="fixed right-0 top-12 w-[28rem] bg-zinc-900 border border-yellow-700 rounded-2xl shadow-2xl p-5 z-50">
               <h3 className="text-xl font-bold text-yellow-400 mb-3">
                 Campaign Invite
               </h3>
