@@ -31,12 +31,27 @@ export default function CampaignInvitePage() {
   }
 
   async function continueToSetup() {
+    if (!campaign) return
+
     const {
       data: { user },
     } = await supabase.auth.getUser()
 
     if (!user) {
-      router.push(`/login?next=/campaign/${campaignCode}/setup`)
+      router.push(`/login?next=/campaign/${campaignCode}/invite`)
+      return
+    }
+
+    const { error: memberError } = await supabase
+      .from("campaign_members")
+      .insert({
+        campaign_id: campaign.id,
+        user_id: user.id,
+        role: "player",
+      })
+
+    if (memberError && !memberError.message.includes("duplicate")) {
+      console.log("INVITE JOIN ERROR:", memberError.message)
       return
     }
 
