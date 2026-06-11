@@ -14,6 +14,15 @@ export type Campaign = {
   created_at: string
 }
 
+export type CampaignMember = {
+  id: string
+  campaign_id: string
+  user_id: string
+  role: "dm" | "player"
+  created_at: string
+  campaigns?: Campaign
+}
+
 export type Character = {
   id: string
   campaign_id: string
