@@ -863,14 +863,7 @@ export default function CampaignDMPage() {
                 className="w-full bg-yellow-600 hover:bg-yellow-500 text-black rounded-xl p-3 font-bold mb-3"
               >
                 {copiedInvite ? "Copied!" : "Copy Invite Link"}
-              </button>
-
-              <button
-                onClick={() => router.push(`/campaign/${campaignCode}/display`)}
-                className="w-full bg-blue-700 hover:bg-blue-600 text-white rounded-xl p-3 font-bold mb-3"
-              >
-                Display Screen
-              </button>
+              </button>            
 
               <button
                 onClick={copyDisplayLink}
