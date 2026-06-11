@@ -148,7 +148,7 @@ export default function HomePage() {
         <div className="flex justify-between items-center mb-10">
           <div>
             <h1 className="text-5xl font-black text-yellow-500">
-              D&D DASHBOARD TEST 999
+              Dungeons & Dragons Campaign Manager
             </h1>
 
             <p className="text-zinc-400 mt-2">
